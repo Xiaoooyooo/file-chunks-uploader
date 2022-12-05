@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #progress {
+        margin-top: 20px;
+        height: 10px;
+        width: 0;
+        transition: width 0.3s ease;
+        /* background-color: red; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <input type="file" name="" id="file" />
+      <input type="button" value="Upload" id="upload" />
+      <input type="button" value="Abort" id="abort" />
+      <div id="progress"></div>
+      <div id="percentage">0%</div>
+      <script type="module">
+        import uploder from "/uploader";
+        const file = document.getElementById("file");
+        const upload = document.getElementById("upload");
+        const abort = document.getElementById("abort");
+        const progress = document.getElementById("progress");
+        const percentage = document.getElementById("percentage");
+        upload.addEventListener("click", function () {
+          const _file = file.files[0];
+          if (!_file) return;
+          console.log({ _file, size: _file.size });
+          window.abortHanlder = uploder({
+            file: _file,
+            chunkSize: 20 * 1024 * 1024,
+            // ignoreChunks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // ignore all chunks
+            ignoreChunks: [1, 4, 7, 9, 10],
+            url: "/upload",
+            method: "post",
+            maxInOneTime: 3,
+            timeout: 15000,
+            data: (chunk, index) => {
+              // return {
+              //   current: chunk,
+              //   index,
+              //   aaa: "aaa",
+              // };
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  console.log("upload", chunk, index);
+                  resolve({
+                    current: chunk,
+                    index,
+                    aaa: "aaa",
+                  });
+                }, 500);
+              });
+            },
+            onChunkUploadSuccess(res) {
+              console.log("onChunkUploadSuccess", res.response);
+            },
+            onChunkUploadFailed(reason) {
+              console.log("onChunkUploadFailed", reason);
+            },
+            onUploadSuccess() {
+              console.log("onUploadSuccess");
+              progress.style.backgroundColor = "green";
+            },
+            onUploadFailed(err) {
+              console.log("onUploadFailed", err);
+              progress.style.backgroundColor = "red";
+            },
+            onUploadProgress(percent) {
+              // console.log("onUploadProgress", percent);
+              progress.style.backgroundColor = "blue";
+              progress.style.width = `${percent * 100}%`;
+              percentage.innerText = `${percent * 100}%`;
+            },
+          });
+        });
+        abort.addEventListener("click", function () {
+          console.log("Abort");
+          window.abortHanlder?.();
+        });
+      </script>
+    </div>
+  </body>
+</html>

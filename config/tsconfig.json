@@ -1,0 +1,12 @@
+{
+  // "extends": "",
+  "compilerOptions": {
+    // "outDir": "dist",
+    "declaration": true,
+    "lib": ["DOM", "ESNext"],
+    "target": "ES2015",
+    "baseUrl": "../src",
+  },
+  "include": ["../src/*"],
+  "exclude": ["node_modules"]
+}
