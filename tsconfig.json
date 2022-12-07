@@ -1,12 +1,13 @@
 {
-  // "extends": "",
   "compilerOptions": {
-    // "outDir": "dist",
+    "outDir": "dist",
     "declaration": true,
+    "declarationDir": "typings",
     "lib": ["DOM", "ESNext"],
     "target": "ES2015",
     "baseUrl": "../src",
+    "module": "esnext"
   },
-  "include": ["../src/*"],
+  "include": ["src/*"],
   "exclude": ["node_modules"]
 }

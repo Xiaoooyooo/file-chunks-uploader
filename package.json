@@ -1,29 +1,33 @@
 {
   "name": "file-chunks-uploader",
-  "version": "1.0.0",
-  "keywords": ["file", "upload", "chunk", "promise", "multipart", "form"],
+  "version": "1.0.1",
+  "keywords": [
+    "file",
+    "upload",
+    "chunk",
+    "promise",
+    "multipart",
+    "form"
+  ],
   "author": "Xiaoooyooo <xiaoooyooo@gmail.com>",
   "description": "Upload (large) file by chunks",
-  "main": "dist/ejs/index.js",
+  "main": "dist/index.js",
+  "typings": "typings/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xiaoooyooo/file-chunks-uploader"
+  },
+  "homepage": "https://github.com/Xiaoooyooo/file-chunks-uploader#readme",
   "scripts": {
-    "build": "npm run build:cjs && npm run build:ejs",
-    "build:cjs": "tsc -p config/tsconfig.cjs.json",
-    "build:ejs": "tsc -p config/tsconfig.ejs.json",
-    "dev": "tsc -w -p config/tsconfig.ejs.json"
+    "clean": "rm -rf dist/* && rm -rf typings/*",
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -w -p config/tsconfig.ejs.json",
+    "prepublish": "yarn clean && yarn build"
   },
-  "files": ["dist"],
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/ejs/index.d.ts",
-        "default": "./dist/ejs/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
-      }
-    }
-  },
+  "files": [
+    "dist",
+    "typings"
+  ],
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.8.4"
