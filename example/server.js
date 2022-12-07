@@ -32,14 +32,14 @@ http
         "content-type": "application/javascript",
         "cache-control": "no-store",
       });
-      return fs.createReadStream("../dist/ejs/index.js").pipe(res);
+      return fs.createReadStream("../dist/index.js").pipe(res);
     }
     if (method === "GET" && url === "/request") {
       res.writeHead(200, {
         "content-type": "application/javascript",
         "cache-control": "no-store",
       });
-      return fs.createReadStream("../dist/ejs/request.js").pipe(res);
+      return fs.createReadStream("../dist/request.js").pipe(res);
     }
     res.statusCode = 404;
     res.end();

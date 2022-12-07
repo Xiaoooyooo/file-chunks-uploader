@@ -47,7 +47,7 @@ cancelHandler();
 For detail: 
 
 ```bash
-# compiler source code in watch mode
+# compile source code in watch mode
 cd file-chunks-uploder
 yarn
 yarn dev
